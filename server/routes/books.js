@@ -41,26 +41,66 @@ router.get('/add', (req, res, next) => {
 // POST process the Book Details page and create a new Book - CREATE
 router.post('/add', (req, res, next) => {
 
-    /*****************
-     * ADD CODE HERE *
-     *****************/
+  let updatedItem = new book({
+
+    "Title": req.body.title,
+    "Price": req.body.price,
+    "Author": req.body.author,
+    "Genre": req.body.genre,
+});
+    book.create(updatedItem, (err) => {
+    if (err) {
+        console.error(err);
+        res.end(err);
+    }
+    ;
+    res.redirect('/books');
+});
 
 });
 
 // GET the Book Details page in order to edit an existing Book
 router.get('/:id', (req, res, next) => {
 
-    /*****************
-     * ADD CODE HERE *
-     *****************/
+  let id = req.params.id;
+  let updatedItem = new book({
+
+    "_id": id,
+    "Title": req.body.title,
+    "Price": req.body.price,
+    "Author": req.body.author,
+    "Genre": req.body.genre,
+});
+    book.updateOne({ _id: id }, updatedItem, {}, (err) => {
+    if (err) {
+        console.error(err);
+        res.end(err);
+    }
+    ;
+    res.redirect('/books/details');
+});
+
+  
 });
 
 // POST - process the information passed from the details form and update the document
 router.post('/:id', (req, res, next) => {
 
-    /*****************
-     * ADD CODE HERE *
-     *****************/
+  let newItem = new book({
+
+    "Title": req.body.title,
+    "Price": req.body.price,
+    "Author": req.body.author,
+    "Genre": req.body.genre,
+  });
+  book.create(newItem, (err) => {
+    if (err) {
+        console.error(err);
+        res.end(err);
+    }
+    ;
+    res.redirect('/books');
+});
 
 });
 
